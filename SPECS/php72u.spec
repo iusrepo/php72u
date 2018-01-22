@@ -65,7 +65,7 @@
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php72u
-Version: 7.2.0
+Version: 7.2.1
 Release: 1.ius%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -114,7 +114,6 @@ Patch46: php-7.2.0-fixheader.patch
 Patch47: php-5.6.3-phpinfo.patch
 
 # Upstream fixes (100+)
-Patch100: 0001-Fixed-bug-75514-mt_rand-returns-value-outside-min-ma.patch
 
 # Security fixes (200+)
 
@@ -983,7 +982,6 @@ low-level PHP extension for the libsodium cryptographic library.
 %patch47 -p1 -b .phpinfo
 
 # upstream patches
-%patch100 -p1 -b .upstream
 
 # security patches
 
@@ -1785,7 +1783,12 @@ exit 0
 
 
 %changelog
-* Mon Dec 08 2017 Ben Harper <ben.harper@rackspace.com> - 7.2.0-1.ius
+* Mon Jan 08 2018 Ben Harper <ben.harper@rackspace.com> - 7.2.1-1.ius
+- Latest upstream
+- Remove Patch100 from Fedora:
+  https://src.fedoraproject.org/rpms/php/c/952ff17391f86519e56e6124f34686550fca3d33
+
+* Fri Dec 08 2017 Ben Harper <ben.harper@rackspace.com> - 7.2.0-1.ius
 - initial port from Fedora
 
 * Thu Nov 30 2017 Pete Walter <pwalter@fedoraproject.org> - 7.2.0-3
