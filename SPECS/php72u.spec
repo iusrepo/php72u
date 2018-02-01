@@ -51,7 +51,7 @@
 %global  with_libgd 0
 %endif
 
-%global with_zip     0
+%global with_zip     1
 %global with_libzip  0
 
 # Not yet compatible with firebird 3
@@ -1788,6 +1788,7 @@ exit 0
 * Thu Feb 01 2018 Carl George <carl@george.computer> - 7.2.2-1.ius
 - Latest upstream
 - Add patch49 to enable TLS 1.1/1.2 support
+- Enable zip extension
 
 * Mon Jan 08 2018 Ben Harper <ben.harper@rackspace.com> - 7.2.1-1.ius
 - Latest upstream
