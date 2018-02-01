@@ -122,7 +122,6 @@ BuildRequires: pam-devel
 BuildRequires: libstdc++-devel, openssl-devel
 BuildRequires: sqlite-devel >= 3.6.0
 BuildRequires: zlib-devel, smtpdaemon, libedit-devel
-BuildRequires: pcre-devel >= 6.6
 BuildRequires: bzip2, perl-interpreter, libtool >= 1.4.3, gcc-c++
 BuildRequires: libtool-ltdl-devel
 %if %{with_libzip}
@@ -354,7 +353,6 @@ package and the php-cli package.
 Group: Development/Libraries
 Summary: Files needed for building PHP extensions
 Requires: php-cli%{?_isa} = %{version}-%{release}, autoconf, automake
-Requires: pcre-devel%{?_isa}
 %if %{with_zts}
 Provides: php-zts-devel = %{version}-%{release}
 Provides: php-zts-devel%{?_isa} = %{version}-%{release}
@@ -1142,7 +1140,6 @@ ln -sf ../configure
     --without-gdbm \
     --with-jpeg-dir=%{_prefix} \
     --with-openssl \
-    --with-pcre-regex=%{_prefix} \
     --with-zlib \
     --with-layout=GNU \
     --with-kerberos \
@@ -1789,6 +1786,7 @@ exit 0
 - Latest upstream
 - Add patch49 to enable TLS 1.1/1.2 support
 - Enable zip extension
+- Use bundled PCRE
 
 * Mon Jan 08 2018 Ben Harper <ben.harper@rackspace.com> - 7.2.1-1.ius
 - Latest upstream
