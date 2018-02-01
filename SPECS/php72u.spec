@@ -53,15 +53,10 @@
 
 %global with_zip     0
 %global with_libzip  0
+
 # Not yet compatible with firebird 3
 # https://bugs.php.net/bug.php?id=73512
 %global with_firebird 1
-
-%if 0%{?fedora} >= 18 || 0%{?rhel} >= 7
-%global db_devel  libdb-devel
-%else
-%global db_devel  db4-devel
-%endif
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php72u
@@ -86,7 +81,6 @@ Source6: php-fpm.service
 Source7: php-fpm.logrotate
 Source9: php.modconf
 Source10: php.ztsmodconf
-Source12: php-fpm.wants
 Source13: nginx-fpm.conf
 Source14: nginx-php.conf
 Source15: httpd-fpm.conf
@@ -137,6 +131,7 @@ BuildRequires: libzip-devel >= 0.11
 BuildRequires: systemtap-sdt-devel
 %endif
 BuildRequires: libargon2-devel
+
 %{?filter_provides_in: %filter_provides_in %{_libdir}/php/modules/.*\.so$}
 %{?filter_provides_in: %filter_provides_in %{_libdir}/php-zts/modules/.*\.so$}
 %{?filter_provides_in: %filter_provides_in %{_httpd_moddir}/.*\.so$}
@@ -150,6 +145,7 @@ offers built-in database integration for several commercial and
 non-commercial database management systems, so writing a
 database-enabled webpage with PHP is fairly simple. The most common
 use of PHP coding is probably as a replacement for CGI scripts.
+
 
 %package -n mod_%{name}
 Group: Development/Languages
@@ -177,6 +173,7 @@ Conflicts: php < %{version}-%{release}
 Provides: mod_php = %{version}-%{release}
 Provides: mod_php%{?_isa} = %{version}-%{release}
 Conflicts: mod_php < %{version}-%{release}
+
 
 %description -n mod_%{name}
 The mod_php package contains the module which adds support for the PHP language
@@ -222,12 +219,9 @@ Summary: PHP FastCGI Process Manager
 BuildRequires: libacl-devel
 Requires: php-common%{?_isa} = %{version}-%{release}
 Requires(pre): /usr/sbin/useradd
-BuildRequires: systemd-units
+BuildRequires: systemd
 BuildRequires: systemd-devel
-Requires: systemd-units
-Requires(post): systemd-units
-Requires(preun): systemd-units
-Requires(postun): systemd-units
+%{?systemd_requires}
 # php engine for Apache httpd webserver
 Provides: php(httpd)
 
@@ -783,7 +777,7 @@ Summary: A database abstraction layer module for PHP applications
 Group: Development/Languages
 # All files licensed under PHP version 3.01
 License: PHP
-BuildRequires: %{db_devel}
+BuildRequires: libdb-devel
 BuildRequires: tokyocabinet-devel
 BuildRequires: lmdb-devel
 Requires: php-common%{?_isa} = %{version}-%{release}
@@ -795,6 +789,7 @@ Conflicts: php-dba < %{version}-%{release}
 %description dba
 The php-dba package contains a dynamic shared object that will add
 support for using the DBA database abstraction layer to PHP.
+
 
 %package tidy
 Summary: Standard PHP module provides tidy library support
@@ -943,6 +938,7 @@ Conflicts: php-json < %{version}-%{release}
 The php-json package provides an extension that will add
 support for JavaScript Object Notation (JSON) to PHP.
 
+
 %package sodium
 Summary: Wrapper for the Sodium cryptographic library
 # All files licensed under PHP version 3.0.1
@@ -954,9 +950,11 @@ Requires: php-common%{?_isa} = %{version}-%{release}
 Provides:  php-pecl-libsodium         = %{version}
 Provides:  php-pecl(libsodium)         = %{version}
 Provides:  php-pecl(libsodium)%{?_isa} = %{version}
+Provides:  %{name}-pecl-libsodium         = %{version}
 Provides:  %{name}-pecl(libsodium)         = %{version}
 Provides:  %{name}-pecl(libsodium)%{?_isa} = %{version}
 Conflicts: php-sodium < %{version}-%{release}
+
 
 %description sodium
 The php-sodium package provides a simple,
@@ -1026,7 +1024,7 @@ rm Zend/tests/bug68412.phpt
 pver=$(sed -n '/#define PHP_VERSION /{s/.* "//;s/".*$//;p}' main/php_version.h)
 if test "x${pver}" != "x%{version}"; then
    : Error: Upstream PHP version is now ${pver}, expecting %{version}.
-   : Update the version/rcver macros and rebuild.
+   : Update the version macros and rebuild.
    exit 1
 fi
 
@@ -1499,7 +1497,6 @@ install -D -m 644 %{SOURCE14} $RPM_BUILD_ROOT%{_sysconfdir}/nginx/default.d/php.
 # Apache httpd configuration
 install -D -m 644 %{SOURCE15} $RPM_BUILD_ROOT%{_httpd_confdir}/php-fpm.conf
 
-
 # Generate files lists and stub .ini files for each subpackage
 for mod in pgsql odbc ldap snmp xmlrpc imap json \
     mysqlnd mysqli pdo_mysql \
@@ -1605,7 +1602,7 @@ sed -e "s/@PHP_APIVER@/%{apiver}%{isasuffix}/" \
 %endif
     < %{SOURCE3} > macros.php
 install -m 644 -D macros.php \
-           $RPM_BUILD_ROOT%{_rpmconfigdir}/macros.d/macros.php
+           $RPM_BUILD_ROOT%{rpmmacrodir}/macros.php
 
 # Remove unpackaged files
 rm -rf $RPM_BUILD_ROOT%{_libdir}/php/modules/*.a \
@@ -1672,6 +1669,7 @@ exit 0
 %{_bindir}/php
 %if %{with_zts}
 %{_bindir}/zts-php
+%{_mandir}/man1/zts-php.1*
 %endif
 %{_bindir}/php-cgi
 %{_bindir}/phar.phar
@@ -1679,7 +1677,6 @@ exit 0
 # provides phpize here (not in -devel) for pecl command
 %{_bindir}/phpize
 %{_mandir}/man1/php.1*
-%{_mandir}/man1/zts-php.1*
 %{_mandir}/man1/php-cgi.1*
 %{_mandir}/man1/phar.1*
 %{_mandir}/man1/phar.phar.1*
@@ -1710,8 +1707,7 @@ exit 0
 %{_sbindir}/php-fpm
 %dir %{_sysconfdir}/systemd/system/php-fpm.service.d
 %dir %{_sysconfdir}/php-fpm.d
-# log owned by apache for log
-%attr(770,apache,root) %dir %{_localstatedir}/log/php-fpm
+%attr(770,php-fpm,php-fpm) %dir %{_localstatedir}/log/php-fpm
 %dir /run/php-fpm
 %{_mandir}/man8/php-fpm.8*
 %dir %{_datadir}/fpm
@@ -1737,7 +1733,7 @@ exit 0
 %{_mandir}/man1/zts-phpize.1*
 %endif
 %{_mandir}/man1/php-config.1*
-%{_rpmconfigdir}/macros.d/macros.php
+%{rpmmacrodir}/macros.php
 
 %files embedded
 %{_libdir}/libphp7.so
@@ -1777,7 +1773,9 @@ exit 0
 %files mysqlnd -f files.mysqlnd
 %files opcache -f files.opcache
 %config(noreplace) %{_sysconfdir}/php.d/opcache-default.blacklist
+%if %{with_zts}
 %config(noreplace) %{_sysconfdir}/php-zts.d/opcache-default.blacklist
+%endif
 %files json -f files.json
 %files sodium -f files.sodium
 
