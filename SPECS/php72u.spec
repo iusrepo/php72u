@@ -1080,10 +1080,6 @@ echo "d /run/php-fpm 755 root root" >php-fpm.tmpfiles
 # Some extensions have their own configuration file
 cp %{SOURCE50} 10-opcache.ini
 
-%ifarch x86_64
-sed -e '/opcache.huge_code_pages/s/0/1/' -i 10-opcache.ini
-%endif
-
 
 %build
 # aclocal workaround - to be improved
@@ -1787,6 +1783,7 @@ exit 0
 - Add patch49 to enable TLS 1.1/1.2 support
 - Enable zip extension
 - Use bundled PCRE
+- Don't enable opcache.huge_code_pages during %%prep
 
 * Mon Jan 08 2018 Ben Harper <ben.harper@rackspace.com> - 7.2.1-1.ius
 - Latest upstream
