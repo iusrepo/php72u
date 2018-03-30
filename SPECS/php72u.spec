@@ -60,7 +60,7 @@
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php72u
-Version: 7.2.3
+Version: 7.2.4
 Release: 1.ius%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -96,14 +96,14 @@ Patch7: php-5.3.0-recode.patch
 Patch8: php-7.2.0-libdb.patch
 
 # Functional changes
-Patch40: php-7.1.3-dlopen.patch
+Patch40: php-7.2.4-dlopen.patch
 Patch42: php-7.2.3-systzdata-v16.patch
 # See http://bugs.php.net/53436
 Patch43: php-5.4.0-phpize.patch
 # Use -lldap_r for OpenLDAP
 Patch45: php-7.2.3-ldap_r.patch
 # Make php_config.h constant across builds
-Patch46: php-7.2.3-fixheader.patch
+Patch46: php-7.2.4-fixheader.patch
 # drop "Configure command" from phpinfo output
 Patch47: php-5.6.3-phpinfo.patch
 Patch49: php-7.1.0-curltls.patch
@@ -1778,6 +1778,9 @@ exit 0
 
 
 %changelog
+* Fri Mar 30 2018 Carl George <carl@george.computer> - 7.2.4-1.ius
+- Latest upstream
+
 * Thu Mar 01 2018 Ben Harper <ben.harper@rackspace.com> - 7.2.3-1.ius
 - Latest upstream
 - update Patch42, Patch45 and Patch46 from Fedora:
