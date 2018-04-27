@@ -61,7 +61,7 @@
 Summary: PHP scripting language for creating dynamic web sites
 Name: php72u
 Version: 7.2.5
-Release: 1.ius%{?dist}
+Release: 2.ius%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -1471,7 +1471,7 @@ install -m 700 -d $RPM_BUILD_ROOT%{_sharedstatedir}/php/fpm/session
 install -m 700 -d $RPM_BUILD_ROOT%{_sharedstatedir}/php/fpm/wsdlcache
 install -m 700 -d $RPM_BUILD_ROOT%{_sharedstatedir}/php/fpm/opcache
 # Log
-install -m 755 -d $RPM_BUILD_ROOT%{_localstatedir}/log/php-fpm
+install -m 750 -d $RPM_BUILD_ROOT%{_localstatedir}/log/php-fpm
 install -m 755 -d $RPM_BUILD_ROOT/run/php-fpm
 # Config
 install -m 755 -d $RPM_BUILD_ROOT%{_sysconfdir}/php-fpm.d
@@ -1704,7 +1704,7 @@ exit 0
 %{_sbindir}/php-fpm
 %dir %{_sysconfdir}/systemd/system/php-fpm.service.d
 %dir %{_sysconfdir}/php-fpm.d
-%attr(770,php-fpm,php-fpm) %dir %{_localstatedir}/log/php-fpm
+%attr(750,php-fpm,php-fpm) %dir %{_localstatedir}/log/php-fpm
 %dir /run/php-fpm
 %{_mandir}/man8/php-fpm.8*
 %dir %{_datadir}/fpm
@@ -1778,6 +1778,9 @@ exit 0
 
 
 %changelog
+* Fri Apr 27 2018 Carl George <carl@george.computer> - 7.2.5-2.ius
+- Keep logrotate happy by removing group write permission from /var/log/php-fpm
+
 * Thu Apr 26 2018 Carl George <carl@george.computer> - 7.2.5-1.ius
 - Latest upstream
 
