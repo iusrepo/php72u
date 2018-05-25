@@ -60,8 +60,8 @@
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php72u
-Version: 7.2.5
-Release: 2.ius%{?dist}
+Version: 7.2.6
+Release: 1.ius%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -1778,6 +1778,9 @@ exit 0
 
 
 %changelog
+* Fri May 25 2018 Carl George <carl@george.computer> - 7.2.6-1.ius
+- Latest upstream
+
 * Fri Apr 27 2018 Carl George <carl@george.computer> - 7.2.5-2.ius
 - Keep logrotate happy by removing group write permission from /var/log/php-fpm
 
