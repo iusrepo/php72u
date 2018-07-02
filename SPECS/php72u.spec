@@ -61,7 +61,7 @@
 Summary: PHP scripting language for creating dynamic web sites
 Name: php72u
 Version: 7.2.7
-Release: 1.ius%{?dist}
+Release: 2.ius%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -1172,6 +1172,7 @@ build --libdir=%{_libdir}/php \
       --with-gd=shared,%{_prefix} \
 %else
       --with-gd=shared \
+      --with-webp-dir=%{_prefix} \
 %endif
       --with-gmp=shared \
       --enable-calendar=shared \
@@ -1301,6 +1302,7 @@ build --includedir=%{_includedir}/php-zts \
       --with-gd=shared,%{_prefix} \
 %else
       --with-gd=shared \
+      --with-webp-dir=%{_prefix} \
 %endif
       --with-gmp=shared \
       --enable-calendar=shared \
@@ -1778,6 +1780,9 @@ exit 0
 
 
 %changelog
+* Mon Jul 02 2018 Carl George <carl@george.computer> - 7.2.7-2.ius
+- Enable WebP support when using bundled GD
+
 * Fri Jun 22 2018 Carl George <carl@george.computer> - 7.2.7-1.ius
 - Latest upstream
 
