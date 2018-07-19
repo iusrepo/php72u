@@ -106,6 +106,8 @@ Patch45: php-7.2.3-ldap_r.patch
 Patch46: php-7.2.4-fixheader.patch
 # drop "Configure command" from phpinfo output
 Patch47: php-5.6.3-phpinfo.patch
+# getallheaders for FPM backported from 7.3
+Patch48: php-7.2.8-getallheaders.patch
 Patch49: php-7.1.0-curltls.patch
 
 # Upstream fixes (100+)
@@ -977,6 +979,7 @@ low-level PHP extension for the libsodium cryptographic library.
 %endif
 %patch46 -p1 -b .fixheader
 %patch47 -p1 -b .phpinfo
+%patch48 -p1 -b .getallheaders
 %if 0%{?rhel}
 %patch49 -p1 -b .curltls
 %endif
@@ -1782,6 +1785,7 @@ exit 0
 %changelog
 * Thu Jul 19 2018 Carl George <carl@george.computer> - 7.2.8-1.ius
 - Latest upstream
+- Add patch48 to add getallheaders function in FPM (imported from Fedora)
 
 * Mon Jul 02 2018 Carl George <carl@george.computer> - 7.2.7-2.ius
 - Enable WebP support when using bundled GD
