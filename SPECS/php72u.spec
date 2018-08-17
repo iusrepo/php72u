@@ -60,7 +60,7 @@
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php72u
-Version: 7.2.8
+Version: 7.2.9
 Release: 1.ius%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -1783,6 +1783,9 @@ exit 0
 
 
 %changelog
+* Fri Aug 17 2018 Carl George <carl@george.computer> - 7.2.9-1.ius
+- Latest upstream
+
 * Thu Jul 19 2018 Carl George <carl@george.computer> - 7.2.8-1.ius
 - Latest upstream
 - Add patch48 to add getallheaders function in FPM (imported from Fedora)
