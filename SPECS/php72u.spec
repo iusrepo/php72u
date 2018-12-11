@@ -61,7 +61,7 @@
 Summary: PHP scripting language for creating dynamic web sites
 Name: php72u
 Version: 7.2.13
-Release: 1.ius%{?dist}
+Release: 2.ius%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -114,6 +114,7 @@ Patch49: php-7.1.0-curltls.patch
 # Upstream fixes (100+)
 
 # Security fixes (200+)
+Patch200: php-imap.patch
 
 # Fixes for tests (300+)
 # Factory is droped from system tzdata
@@ -990,6 +991,7 @@ low-level PHP extension for the libsodium cryptographic library.
 # upstream patches
 
 # security patches
+%patch200 -p1 -b .imap
 
 # Fixes for tests
 %patch300 -p1 -b .datetests
@@ -1786,6 +1788,9 @@ exit 0
 
 
 %changelog
+* Tue Dec 11 2018 Carl George <carl@george.computer> - 7.2.13-2.ius
+- Fix null pointer dereference in imap_mail CVE-2018-19935 (Fedora)
+
 * Thu Dec 06 2018 Carl George <carl@george.computer> - 7.2.13-1.ius
 - Latest upstream
 
