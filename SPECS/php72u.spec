@@ -481,6 +481,8 @@ Provides: php-pdo_mysql, php-pdo_mysql%{?_isa}
 Provides: %{name}-pdo_mysql, %{name}-pdo_mysql%{?_isa}
 Provides: php-mysqlnd = %{version}-%{release}
 Provides: php-mysqlnd%{?_isa} = %{version}-%{release}
+Provides: php-mysql = %{version}-%{release}
+Provides: php-mysql%{?_isa} = %{version}-%{release}
 Conflicts: php-mysql < %{version}-%{release}
 Conflicts: php-mysqlnd < %{version}-%{release}
 
