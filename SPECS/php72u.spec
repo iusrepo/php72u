@@ -1535,7 +1535,9 @@ for mod in pgsql odbc ldap snmp xmlrpc imap json \
     # some extensions have their own config file
     if [ -f ${ini} ]; then
       cp -p ${ini} $RPM_BUILD_ROOT%{_sysconfdir}/php.d/${ini}
+      %if %{with_zts}
       cp -p ${ini} $RPM_BUILD_ROOT%{_sysconfdir}/php-zts.d/${ini}
+      %endif
     else
       cat > $RPM_BUILD_ROOT%{_sysconfdir}/php.d/${ini} <<EOF
 ; Enable ${mod} extension module
@@ -1593,9 +1595,11 @@ cat files.zip >> files.common
 
 # The default Zend OPcache blacklist file
 install -m 644 %{SOURCE51} $RPM_BUILD_ROOT%{_sysconfdir}/php.d/opcache-default.blacklist
+%if %{with_zts}
 install -m 644 %{SOURCE51} $RPM_BUILD_ROOT%{_sysconfdir}/php-zts.d/opcache-default.blacklist
 sed -e '/blacklist_filename/s/php.d/php-zts.d/' \
     -i $RPM_BUILD_ROOT%{_sysconfdir}/php-zts.d/10-opcache.ini
+%endif
 
 # Install the macros file:
 sed -e "s/@PHP_APIVER@/%{apiver}%{isasuffix}/" \
@@ -1611,7 +1615,9 @@ install -m 644 -D macros.php \
 
 # Remove unpackaged files
 rm -rf $RPM_BUILD_ROOT%{_libdir}/php/modules/*.a \
+%if %{with_zts}
        $RPM_BUILD_ROOT%{_libdir}/php-zts/modules/*.a \
+%endif
        $RPM_BUILD_ROOT%{_bindir}/{phptar} \
        $RPM_BUILD_ROOT%{_datadir}/pear \
        $RPM_BUILD_ROOT%{_libdir}/libphp7.la
