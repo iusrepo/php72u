@@ -125,7 +125,12 @@ BuildRequires: pam-devel
 BuildRequires: libstdc++-devel, openssl-devel
 BuildRequires: sqlite-devel >= 3.6.0
 BuildRequires: zlib-devel, smtpdaemon, libedit-devel
-BuildRequires: bzip2, perl-interpreter, libtool >= 1.4.3, gcc-c++
+BuildRequires: bzip2, libtool >= 1.4.3, gcc-c++
+%if 0%{?fedora} >= 27 || 0%{?rhel} >= 8
+BuildRequires: perl-interpreter
+%else
+BuildRequires: perl
+%endif
 BuildRequires: libtool-ltdl-devel
 %if %{with_libzip}
 BuildRequires: libzip-devel >= 0.11
