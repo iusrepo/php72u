@@ -98,7 +98,7 @@ Patch8: php-7.2.0-libdb.patch
 
 # Functional changes
 Patch40: php-7.2.4-dlopen.patch
-Patch42: php-7.2.3-systzdata-v16.patch
+Patch42: php-7.2.16-systzdata-v17.patch
 # See http://bugs.php.net/53436
 Patch43: php-7.2.12-phpize.patch
 # Use -lldap_r for OpenLDAP
@@ -1804,6 +1804,7 @@ exit 0
 %changelog
 * Thu Mar 07 2019 Carl George <carl@george.computer> - 7.2.16-1.ius
 - Latest upstream
+- Adapt systzdata patch (v17) (Fedora)
 
 * Mon Feb 18 2019 Carl George <carl@george.computer> - 7.2.15-1.ius
 - Latest upstream
