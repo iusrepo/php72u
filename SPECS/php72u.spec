@@ -60,7 +60,7 @@
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php72u
-Version: 7.2.15
+Version: 7.2.16
 Release: 1.ius%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -125,12 +125,17 @@ BuildRequires: pam-devel
 BuildRequires: libstdc++-devel, openssl-devel
 BuildRequires: sqlite-devel >= 3.6.0
 BuildRequires: zlib-devel, smtpdaemon, libedit-devel
-BuildRequires: bzip2, libtool >= 1.4.3, gcc-c++
+BuildRequires: bzip2
 %if 0%{?fedora} >= 27 || 0%{?rhel} >= 8
 BuildRequires: perl-interpreter
 %else
 BuildRequires: perl
 %endif
+BuildRequires: autoconf
+BuildRequires: automake
+BuildRequires: gcc
+BuildRequires: gcc-c++
+BuildRequires: libtool
 BuildRequires: libtool-ltdl-devel
 %if %{with_libzip}
 BuildRequires: libzip-devel >= 0.11
@@ -1797,6 +1802,9 @@ exit 0
 
 
 %changelog
+* Thu Mar 07 2019 Carl George <carl@george.computer> - 7.2.16-1.ius
+- Latest upstream
+
 * Mon Feb 18 2019 Carl George <carl@george.computer> - 7.2.15-1.ius
 - Latest upstream
 
