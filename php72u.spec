@@ -60,8 +60,8 @@
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php72u
-Version: 7.2.17
-Release: 1.ius%{?dist}
+Version: 7.2.18
+Release: 1%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -1802,6 +1802,9 @@ exit 0
 
 
 %changelog
+* Thu May 02 2019 Carl George <carl@george.computer> - 7.2.18-1
+- Latest upstream
+
 * Fri Apr 05 2019 Carl George <carl@george.computer> - 7.2.17-1.ius
 - Latest upstream
 
