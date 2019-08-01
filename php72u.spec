@@ -7,6 +7,7 @@
 #
 # Please preserve changelog entries
 #
+
 # API/ABI check
 %global apiver      20170718
 %global zendver     20170718
@@ -33,12 +34,6 @@
 # Build ZTS extension or only NTS
 %global with_zts      1
 
-%if 0%{?__isa_bits:1}
-%global isasuffix -%{__isa_bits}
-%else
-%global isasuffix %nil
-%endif
-
 # needed at srpm build time, when httpd-devel not yet installed
 %{!?_httpd_mmn:        %{expand: %%global _httpd_mmn        %%(cat %{_includedir}/httpd/.mmn 2>/dev/null || echo 0-0)}}
 
@@ -60,7 +55,7 @@
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php72u
-Version: 7.2.20
+Version: 7.2.21
 Release: 1%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -161,34 +156,32 @@ use of PHP coding is probably as a replacement for CGI scripts.
 
 %package -n mod_%{name}
 Summary: PHP module for the Apache HTTP Server
+# ensure we build with stock httpd, not httpd24u
 BuildRequires: httpd-devel < 2.4.10
 Requires: httpd-mmn = %{_httpd_mmn}
 Requires: php-common%{?_isa} = %{version}-%{release}
-
 %if %{with_zts}
 Provides: php-zts = %{version}-%{release}
 Provides: php-zts%{?_isa} = %{version}-%{release}
 Provides: %{name}-zts = %{version}-%{release}
 Provides: %{name}-zts%{?_isa} = %{version}-%{release}
 %endif
-
 # php engine for Apache httpd webserver
 Provides: php(httpd)
-
 Provides: %{name} = %{version}-%{release}
 Provides: %{name}%{?_isa} = %{version}-%{release}
+# safe replacement
 Provides: php = %{version}-%{release}
 Provides: php%{?_isa} = %{version}-%{release}
 Conflicts: php < %{version}-%{release}
-
 Provides: mod_php = %{version}-%{release}
 Provides: mod_php%{?_isa} = %{version}-%{release}
 Conflicts: mod_php < %{version}-%{release}
 
 
 %description -n mod_%{name}
-The mod_php package contains the module which adds support for the PHP language
-to Apache HTTP Server.
+The mod_%{name} package contains the module which adds support for the PHP
+language to Apache HTTP Server.
 
 
 %package cli
@@ -202,6 +195,7 @@ Provides: php-pcntl, php-pcntl%{?_isa}
 Provides: %{name}-pcntl, %{name}-pcntl%{?_isa}
 Provides: php-readline, php-readline%{?_isa}
 Provides: %{name}-readline, %{name}-readline%{?_isa}
+# safe replacement
 Provides: php-cli = %{version}-%{release}
 Provides: php-cli%{?_isa} = %{version}-%{release}
 Conflicts: php-cli < %{version}-%{release}
@@ -215,6 +209,7 @@ executing PHP scripts, /usr/bin/php, and the CGI interface.
 %package dbg
 Summary: The interactive PHP debugger
 Requires: php-common%{?_isa} = %{version}-%{release}
+# safe replacement
 Provides: php-dbg = %{version}-%{release}
 Provides: php-dbg%{?_isa} = %{version}-%{release}
 Conflicts: php-dbg < %{version}-%{release}
@@ -229,12 +224,11 @@ Summary: PHP FastCGI Process Manager
 BuildRequires: libacl-devel
 Requires: php-common%{?_isa} = %{version}-%{release}
 Requires(pre): /usr/sbin/useradd
-BuildRequires: systemd
 BuildRequires: systemd-devel
 %{?systemd_requires}
 # php engine for Apache httpd webserver
 Provides: php(httpd)
-
+# safe replacement
 Provides: php-fpm = %{version}-%{release}
 Provides: php-fpm%{?_isa} = %{version}-%{release}
 Conflicts: php-fpm < %{version}-%{release}
@@ -251,6 +245,7 @@ Summary: Nginx configuration for PHP-FPM
 BuildArch: noarch
 Requires: %{name}-fpm = %{version}-%{release}
 Requires: nginx
+# safe replacement
 Provides: php-fpm-nginx = %{version}-%{release}
 Conflicts: php-fpm-nginx < %{version}-%{release}
 
@@ -264,6 +259,7 @@ Summary: Apache HTTP Server configuration for PHP-FPM
 BuildArch: noarch
 Requires: %{name}-fpm = %{version}-%{release}
 Requires: httpd >= 2.4
+# safe replacement
 Provides: php-fpm-httpd = %{version}-%{release}
 Conflicts: php-fpm-httpd < %{version}-%{release}
 
@@ -279,11 +275,11 @@ Summary: Common files for PHP
 # regex, libmagic are licensed under BSD
 License: PHP and BSD
 # ABI/API check - Arch specific
-Provides: php(api) = %{apiver}%{isasuffix}
-Provides: php(zend-abi) = %{zendver}%{isasuffix}
+Provides: php(api) = %{apiver}-%{__isa_bits}
+Provides: php(zend-abi) = %{zendver}-%{__isa_bits}
 Provides: php(language) = %{version}, php(language)%{?_isa} = %{version}
-Provides: %{name}(api) = %{apiver}%{isasuffix}
-Provides: %{name}(zend-abi) = %{zendver}%{isasuffix}
+Provides: %{name}(api) = %{apiver}-%{__isa_bits}
+Provides: %{name}(zend-abi) = %{zendver}-%{__isa_bits}
 Provides: %{name}(language) = %{version}, %{name}(language)%{?_isa} = %{version}
 # Provides for all builtin/shared modules:
 Provides: php-bz2, php-bz2%{?_isa}
@@ -345,6 +341,7 @@ Provides: %{name}-zip, %{name}-zip%{?_isa}
 %endif
 Provides: %{name}-zlib, %{name}-zlib%{?_isa}
 
+# safe replacement
 Provides: php-common = %{version}-%{release}
 Provides: php-common%{?_isa} = %{version}-%{release}
 Conflicts: php-common < %{version}-%{release}
@@ -358,13 +355,20 @@ package and the php-cli package.
 
 %package devel
 Summary: Files needed for building PHP extensions
-Requires: php-cli%{?_isa} = %{version}-%{release}, autoconf, automake
+Requires: php-cli%{?_isa} = %{version}-%{release}
+# always needed to build extension
+Requires: autoconf
+Requires: automake
+Requires: gcc
+Requires: gcc-c++
+Requires: libtool
 %if %{with_zts}
 Provides: php-zts-devel = %{version}-%{release}
 Provides: php-zts-devel%{?_isa} = %{version}-%{release}
 Provides: %{name}-zts-devel = %{version}-%{release}
 Provides: %{name}-zts-devel%{?_isa} = %{version}-%{release}
 %endif
+# safe replacement
 Provides: php-devel = %{version}-%{release}
 Provides: php-devel%{?_isa} = %{version}-%{release}
 Conflicts: php-devel < %{version}-%{release}
@@ -388,6 +392,7 @@ Provides:  php-pecl(opcache) = %{version}-%{release}
 Provides:  php-pecl(opcache)%{?_isa} = %{version}-%{release}
 Provides:  %{name}-pecl(opcache) = %{version}-%{release}
 Provides:  %{name}-pecl(opcache)%{?_isa} = %{version}-%{release}
+# safe replacement
 Provides: php-opcache = %{version}-%{release}
 Provides: php-opcache%{?_isa} = %{version}-%{release}
 Conflicts: php-opcache < %{version}-%{release}
@@ -407,6 +412,7 @@ Summary: A module for PHP applications that use IMAP
 License: PHP
 Requires: php-common%{?_isa} = %{version}-%{release}
 BuildRequires: krb5-devel, openssl-devel, libc-client-devel
+# safe replacement
 Provides: php-imap = %{version}-%{release}
 Provides: php-imap%{?_isa} = %{version}-%{release}
 Conflicts: php-imap < %{version}-%{release}
@@ -424,6 +430,7 @@ Summary: A module for PHP applications that use LDAP
 License: PHP
 Requires: php-common%{?_isa} = %{version}-%{release}
 BuildRequires: cyrus-sasl-devel, openldap-devel, openssl-devel
+# safe replacement
 Provides: php-ldap = %{version}-%{release}
 Provides: php-ldap%{?_isa} = %{version}-%{release}
 Conflicts: php-ldap < %{version}-%{release}
@@ -442,14 +449,15 @@ Summary: A database access abstraction module for PHP applications
 License: PHP
 Requires: php-common%{?_isa} = %{version}-%{release}
 # ABI/API check - Arch specific
-Provides: php-pdo-abi  = %{pdover}%{isasuffix}
-Provides: php(pdo-abi) = %{pdover}%{isasuffix}
-Provides: %{name}-pdo-abi  = %{pdover}%{isasuffix}
-Provides: %{name}(pdo-abi) = %{pdover}%{isasuffix}
+Provides: php-pdo-abi  = %{pdover}-%{__isa_bits}
+Provides: php(pdo-abi) = %{pdover}-%{__isa_bits}
+Provides: %{name}-pdo-abi  = %{pdover}-%{__isa_bits}
+Provides: %{name}(pdo-abi) = %{pdover}-%{__isa_bits}
 Provides: php-sqlite3, php-sqlite3%{?_isa}
 Provides: %{name}-sqlite3, %{name}-sqlite3%{?_isa}
 Provides: php-pdo_sqlite, php-pdo_sqlite%{?_isa}
 Provides: %{name}-pdo_sqlite, %{name}-pdo_sqlite%{?_isa}
+# safe replacement
 Provides: php-pdo = %{version}-%{release}
 Provides: php-pdo%{?_isa} = %{version}-%{release}
 Conflicts: php-pdo < %{version}-%{release}
@@ -474,10 +482,11 @@ Provides: %{name}-mysqli = %{version}-%{release}
 Provides: %{name}-mysqli%{?_isa} = %{version}-%{release}
 Provides: php-pdo_mysql, php-pdo_mysql%{?_isa}
 Provides: %{name}-pdo_mysql, %{name}-pdo_mysql%{?_isa}
+# safe replacement
 Provides: php-mysqlnd = %{version}-%{release}
 Provides: php-mysqlnd%{?_isa} = %{version}-%{release}
-Conflicts: php-mysql < %{version}-%{release}
 Conflicts: php-mysqlnd < %{version}-%{release}
+Conflicts: php-mysql < %{version}-%{release}
 
 
 %description mysqlnd
@@ -499,6 +508,7 @@ Provides: php_database
 Provides: php-pdo_pgsql, php-pdo_pgsql%{?_isa}
 Provides: %{name}-pdo_pgsql, %{name}-pdo_pgsql%{?_isa}
 BuildRequires: krb5-devel, openssl-devel, postgresql-devel
+# safe replacement
 Provides: php-pgsql = %{version}-%{release}
 Provides: php-pgsql%{?_isa} = %{version}-%{release}
 Conflicts: php-pgsql < %{version}-%{release}
@@ -528,6 +538,7 @@ Provides: %{name}-shmop, %{name}-shmop%{?_isa}
 Provides: %{name}-sysvsem, %{name}-sysvsem%{?_isa}
 Provides: %{name}-sysvshm, %{name}-sysvshm%{?_isa}
 Provides: %{name}-sysvmsg, %{name}-sysvmsg%{?_isa}
+# safe replacement
 Provides: php-process = %{version}-%{release}
 Provides: php-process%{?_isa} = %{version}-%{release}
 Conflicts: php-process < %{version}-%{release}
@@ -549,6 +560,7 @@ Provides: php_database
 Provides: php-pdo_odbc, php-pdo_odbc%{?_isa}
 Provides: %{name}-pdo_odbc, %{name}-pdo_odbc%{?_isa}
 BuildRequires: unixODBC-devel
+# safe replacement
 Provides: php-odbc = %{version}-%{release}
 Provides: php-odbc%{?_isa} = %{version}-%{release}
 Conflicts: php-odbc < %{version}-%{release}
@@ -570,6 +582,7 @@ Summary: A module for PHP applications that use the SOAP protocol
 License: PHP
 Requires: php-common%{?_isa} = %{version}-%{release}
 BuildRequires: libxml2-devel
+# safe replacement
 Provides: php-soap = %{version}-%{release}
 Provides: php-soap%{?_isa} = %{version}-%{release}
 Conflicts: php-soap < %{version}-%{release}
@@ -593,6 +606,7 @@ Provides: php-firebird, php-firebird%{?_isa}
 Provides: %{name}-firebird, %{name}-firebird%{?_isa}
 Provides: php-pdo_firebird, php-pdo_firebird%{?_isa}
 Provides: %{name}-pdo_firebird, %{name}-pdo_firebird%{?_isa}
+# safe replacement
 Provides: php-interbase = %{version}-%{release}
 Provides: php-interbase%{?_isa} = %{version}-%{release}
 Conflicts: php-interbase < %{version}-%{release}
@@ -619,6 +633,7 @@ Summary: A module for PHP applications that query SNMP-managed devices
 License: PHP
 Requires: php-common%{?_isa} = %{version}-%{release}, net-snmp
 BuildRequires: net-snmp-devel
+# safe replacement
 Provides: php-snmp = %{version}-%{release}
 Provides: php-snmp%{?_isa} = %{version}-%{release}
 Conflicts: php-snmp < %{version}-%{release}
@@ -651,6 +666,7 @@ Provides: %{name}-xmlreader, %{name}-xmlreader%{?_isa}
 Provides: %{name}-xmlwriter, %{name}-xmlwriter%{?_isa}
 Provides: %{name}-xsl, %{name}-xsl%{?_isa}
 BuildRequires: libxslt-devel >= 1.0.18-1, libxml2-devel >= 2.4.14-1
+# safe replacement
 Provides: php-xml = %{version}-%{release}
 Provides: php-xml%{?_isa} = %{version}-%{release}
 Conflicts: php-xml < %{version}-%{release}
@@ -668,6 +684,7 @@ Summary: A module for PHP applications which use the XML-RPC protocol
 # libXMLRPC is licensed under BSD
 License: PHP and BSD
 Requires: php-xml%{?_isa} = %{version}-%{release}
+# safe replacement
 Provides: php-xmlrpc = %{version}-%{release}
 Provides: php-xmlrpc%{?_isa} = %{version}-%{release}
 Conflicts: php-xmlrpc < %{version}-%{release}
@@ -687,6 +704,7 @@ License: PHP and LGPLv2 and OpenLDAP
 BuildRequires: oniguruma-devel
 Provides: bundled(libmbfl) = 1.3.2
 Requires: php-common%{?_isa} = %{version}-%{release}
+# safe replacement
 Provides: php-mbstring = %{version}-%{release}
 Provides: php-mbstring%{?_isa} = %{version}-%{release}
 Conflicts: php-mbstring < %{version}-%{release}
@@ -718,6 +736,7 @@ BuildRequires: libXpm-devel
 BuildRequires: libwebp-devel
 Provides: bundled(gd) = 2.0.35
 %endif
+# safe replacement
 Provides: php-gd = %{version}-%{release}
 Provides: php-gd%{?_isa} = %{version}-%{release}
 Conflicts: php-gd < %{version}-%{release}
@@ -734,6 +753,7 @@ Summary: A module for PHP applications for using the bcmath library
 # libbcmath is licensed under LGPLv2+
 License: PHP and LGPLv2+
 Requires: php-common%{?_isa} = %{version}-%{release}
+# safe replacement
 Provides: php-bcmath = %{version}-%{release}
 Provides: php-bcmath%{?_isa} = %{version}-%{release}
 Conflicts: php-bcmath < %{version}-%{release}
@@ -750,6 +770,7 @@ Summary: A module for PHP applications for using the GNU MP library
 License: PHP
 BuildRequires: gmp-devel
 Requires: php-common%{?_isa} = %{version}-%{release}
+# safe replacement
 Provides: php-gmp = %{version}-%{release}
 Provides: php-gmp%{?_isa} = %{version}-%{release}
 Conflicts: php-gmp < %{version}-%{release}
@@ -768,6 +789,7 @@ BuildRequires: libdb-devel
 BuildRequires: tokyocabinet-devel
 BuildRequires: lmdb-devel
 Requires: php-common%{?_isa} = %{version}-%{release}
+# safe replacement
 Provides: php-dba = %{version}-%{release}
 Provides: php-dba%{?_isa} = %{version}-%{release}
 Conflicts: php-dba < %{version}-%{release}
@@ -784,6 +806,7 @@ Summary: Standard PHP module provides tidy library support
 License: PHP
 Requires: php-common%{?_isa} = %{version}-%{release}
 BuildRequires: libtidy-devel
+# safe replacement
 Provides: php-tidy = %{version}-%{release}
 Provides: php-tidy%{?_isa} = %{version}-%{release}
 Conflicts: php-tidy < %{version}-%{release}
@@ -802,6 +825,7 @@ Requires: php-pdo%{?_isa} = %{version}-%{release}
 BuildRequires: freetds-devel
 Provides: php-pdo_dblib, php-pdo_dblib%{?_isa}
 Provides: %{name}-pdo_dblib, %{name}-pdo_dblib%{?_isa}
+# safe replacement
 Provides: php-pdo-dblib = %{version}-%{release}
 Provides: php-pdo-dblib%{?_isa} = %{version}-%{release}
 Conflicts: php-pdo-dblib < %{version}-%{release}
@@ -821,6 +845,7 @@ Provides: php-embedded-devel = %{version}-%{release}
 Provides: php-embedded-devel%{?_isa} = %{version}-%{release}
 Provides: %{name}-embedded-devel = %{version}-%{release}
 Provides: %{name}-embedded-devel%{?_isa} = %{version}-%{release}
+# safe replacement
 Provides: php-embedded = %{version}-%{release}
 Provides: php-embedded%{?_isa} = %{version}-%{release}
 Conflicts: php-embedded < %{version}-%{release}
@@ -837,6 +862,7 @@ Summary: A module for PHP applications for using pspell interfaces
 License: PHP
 Requires: php-common%{?_isa} = %{version}-%{release}
 BuildRequires: aspell-devel >= 0.50.0
+# safe replacement
 Provides: php-pspell = %{version}-%{release}
 Provides: php-pspell%{?_isa} = %{version}-%{release}
 Conflicts: php-pspell < %{version}-%{release}
@@ -853,6 +879,7 @@ Summary: A module for PHP applications for using the recode library
 License: PHP
 Requires: php-common%{?_isa} = %{version}-%{release}
 BuildRequires: recode-devel
+# safe replacement
 Provides: php-recode = %{version}-%{release}
 Provides: php-recode%{?_isa} = %{version}-%{release}
 Conflicts: php-recode < %{version}-%{release}
@@ -869,6 +896,7 @@ Summary: Internationalization extension for PHP applications
 License: PHP
 Requires: php-common%{?_isa} = %{version}-%{release}
 BuildRequires: libicu-devel >= 4.0
+# safe replacement
 Provides: php-intl = %{version}-%{release}
 Provides: php-intl%{?_isa} = %{version}-%{release}
 Conflicts: php-intl < %{version}-%{release}
@@ -885,6 +913,7 @@ Summary: Enchant spelling extension for PHP applications
 License: PHP
 Requires: php-common%{?_isa} = %{version}-%{release}
 BuildRequires: enchant-devel >= 1.2.4
+# safe replacement
 Provides: php-enchant = %{version}-%{release}
 Provides: php-enchant%{?_isa} = %{version}-%{release}
 Conflicts: php-enchant < %{version}-%{release}
@@ -908,6 +937,7 @@ Provides:  %{name}-pecl(json)         = %{jsonver}
 Provides:  %{name}-pecl(json)%{?_isa} = %{jsonver}
 Provides:  %{name}-pecl-json          = %{jsonver}
 Provides:  %{name}-pecl-json%{?_isa}  = %{jsonver}
+# safe replacement
 Provides: php-json = %{version}-%{release}
 Provides: php-json%{?_isa} = %{version}-%{release}
 Conflicts: php-json < %{version}-%{release}
@@ -931,6 +961,9 @@ Provides:  php-pecl(libsodium)%{?_isa} = %{version}
 Provides:  %{name}-pecl-libsodium         = %{version}
 Provides:  %{name}-pecl(libsodium)         = %{version}
 Provides:  %{name}-pecl(libsodium)%{?_isa} = %{version}
+# safe replacement
+Provides: php-sodium = %{version}-%{release}
+Provides: php-sodium%{?_isa} = %{version}-%{release}
 Conflicts: php-sodium < %{version}-%{release}
 
 
@@ -1076,7 +1109,7 @@ touch configure.ac
 CFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing -Wno-pointer-sign"
 export CFLAGS
 
-# Install extension modules in %{_libdir}/php/modules.
+# Install extension modules in %%{_libdir}/php/modules.
 EXTENSION_DIR=%{_libdir}/php/modules; export EXTENSION_DIR
 
 # Set PEAR_INSTALLDIR to ensure that the hard-coded include_path
@@ -1576,16 +1609,16 @@ sed -e '/blacklist_filename/s/php.d/php-zts.d/' \
 %endif
 
 # Install the macros file:
-sed -e "s/@PHP_APIVER@/%{apiver}%{isasuffix}/" \
-    -e "s/@PHP_ZENDVER@/%{zendver}%{isasuffix}/" \
-    -e "s/@PHP_PDOVER@/%{pdover}%{isasuffix}/" \
+sed -e "s/@PHP_APIVER@/%{apiver}-%{__isa_bits}/" \
+    -e "s/@PHP_ZENDVER@/%{zendver}-%{__isa_bits}/" \
+    -e "s/@PHP_PDOVER@/%{pdover}-%{__isa_bits}/" \
     -e "s/@PHP_VERSION@/%{version}/" \
 %if ! %{with_zts}
     -e "/zts/d" \
 %endif
     < %{SOURCE3} > macros.php
 install -m 644 -D macros.php \
-           $RPM_BUILD_ROOT%{rpmmacrodir}/macros.php
+           $RPM_BUILD_ROOT%{_rpmmacrodir}/macros.php
 
 # Remove unpackaged files
 rm -rf $RPM_BUILD_ROOT%{_libdir}/php/modules/*.a \
@@ -1718,7 +1751,7 @@ exit 0
 %{_mandir}/man1/zts-phpize.1*
 %endif
 %{_mandir}/man1/php-config.1*
-%{rpmmacrodir}/macros.php
+%{_rpmmacrodir}/macros.php
 
 %files embedded
 %{_libdir}/libphp7.so
@@ -1766,6 +1799,9 @@ exit 0
 
 
 %changelog
+* Thu Aug 01 2019 Carl George <carl@george.computer> - 7.2.21-1
+- Latest upstream
+
 * Fri Jul 05 2019 Carl George <carl@george.computer> - 7.2.20-1
 - Latest upstream
 
