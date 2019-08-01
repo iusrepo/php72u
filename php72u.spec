@@ -69,7 +69,6 @@ Release: 1%{?dist}
 # ext/date/lib is MIT
 # Zend/zend_sort is NCSA
 License: PHP and Zend and BSD and MIT and ASL 1.0 and NCSA
-Group: Development/Languages
 URL: http://www.php.net/
 
 Source0: https://www.php.net/distributions/php-%{version}.tar.xz
@@ -161,7 +160,6 @@ use of PHP coding is probably as a replacement for CGI scripts.
 
 
 %package -n mod_%{name}
-Group: Development/Languages
 Summary: PHP module for the Apache HTTP Server
 BuildRequires: httpd-devel < 2.4.10
 Requires: httpd-mmn = %{_httpd_mmn}
@@ -194,7 +192,6 @@ to Apache HTTP Server.
 
 
 %package cli
-Group: Development/Languages
 Summary: Command-line interface for PHP
 # sapi/cli/ps_title.c is PostgreSQL
 License: PHP and Zend and BSD and MIT and ASL 1.0 and NCSA and PostgreSQL
@@ -216,7 +213,6 @@ executing PHP scripts, /usr/bin/php, and the CGI interface.
 
 
 %package dbg
-Group: Development/Languages
 Summary: The interactive PHP debugger
 Requires: php-common%{?_isa} = %{version}-%{release}
 Provides: php-dbg = %{version}-%{release}
@@ -229,7 +225,6 @@ The php-dbg package contains the interactive PHP debugger.
 
 
 %package fpm
-Group: Development/Languages
 Summary: PHP FastCGI Process Manager
 BuildRequires: libacl-devel
 Requires: php-common%{?_isa} = %{version}-%{release}
@@ -252,7 +247,6 @@ any size, especially busier sites.
 
 
 %package fpm-nginx
-Group: Development/Languages
 Summary: Nginx configuration for PHP-FPM
 BuildArch: noarch
 Requires: %{name}-fpm = %{version}-%{release}
@@ -266,7 +260,6 @@ Nginx configuration files for the PHP FastCGI Process Manager.
 
 
 %package fpm-httpd
-Group: Development/Languages
 Summary: Apache HTTP Server configuration for PHP-FPM
 BuildArch: noarch
 Requires: %{name}-fpm = %{version}-%{release}
@@ -280,7 +273,6 @@ Apache HTTP Server configuration file for the PHP FastCGI Process Manager.
 
 
 %package common
-Group: Development/Languages
 Summary: Common files for PHP
 # All files licensed under PHP version 3.01, except
 # fileinfo is licensed under PHP version 3.0
@@ -365,7 +357,6 @@ package and the php-cli package.
 
 
 %package devel
-Group: Development/Libraries
 Summary: Files needed for building PHP extensions
 Requires: php-cli%{?_isa} = %{version}-%{release}, autoconf, automake
 %if %{with_zts}
@@ -387,7 +378,6 @@ need to install this package.
 
 %package opcache
 Summary:   The Zend OPcache
-Group:     Development/Languages
 License:   PHP
 Requires:  php-common%{?_isa} = %{version}-%{release}
 Provides:  php-pecl-zendopcache = %{version}-%{release}
@@ -413,7 +403,6 @@ bytecode optimization patterns that make code execution faster.
 
 %package imap
 Summary: A module for PHP applications that use IMAP
-Group: Development/Languages
 # All files licensed under PHP version 3.01
 License: PHP
 Requires: php-common%{?_isa} = %{version}-%{release}
@@ -431,7 +420,6 @@ messages on mail servers. PHP is an HTML-embedded scripting language.
 
 %package ldap
 Summary: A module for PHP applications that use LDAP
-Group: Development/Languages
 # All files licensed under PHP version 3.01
 License: PHP
 Requires: php-common%{?_isa} = %{version}-%{release}
@@ -450,7 +438,6 @@ language.
 
 %package pdo
 Summary: A database access abstraction module for PHP applications
-Group: Development/Languages
 # All files licensed under PHP version 3.01
 License: PHP
 Requires: php-common%{?_isa} = %{version}-%{release}
@@ -477,7 +464,6 @@ databases.
 
 %package mysqlnd
 Summary: A module for PHP applications that use MySQL databases
-Group: Development/Languages
 # All files licensed under PHP version 3.01
 License: PHP
 Requires: php-pdo%{?_isa} = %{version}-%{release}
@@ -506,7 +492,6 @@ This package use the MySQL Native Driver
 
 %package pgsql
 Summary: A PostgreSQL database module for PHP
-Group: Development/Languages
 # All files licensed under PHP version 3.01
 License: PHP
 Requires: php-pdo%{?_isa} = %{version}-%{release}
@@ -530,7 +515,6 @@ php package.
 
 %package process
 Summary: Modules for PHP script using system process interfaces
-Group: Development/Languages
 # All files licensed under PHP version 3.01
 License: PHP
 Requires: php-common%{?_isa} = %{version}-%{release}
@@ -557,7 +541,6 @@ communication.
 
 %package odbc
 Summary: A module for PHP applications that use ODBC databases
-Group: Development/Languages
 # All files licensed under PHP version 3.01, except
 # pdo_odbc is licensed under PHP version 3.0
 License: PHP
@@ -583,7 +566,6 @@ package.
 
 %package soap
 Summary: A module for PHP applications that use the SOAP protocol
-Group: Development/Languages
 # All files licensed under PHP version 3.01
 License: PHP
 Requires: php-common%{?_isa} = %{version}-%{release}
@@ -601,7 +583,6 @@ support to PHP for using the SOAP web services protocol.
 %if %{with_firebird}
 %package interbase
 Summary: A module for PHP applications that use Interbase/Firebird databases
-Group: Development/Languages
 # All files licensed under PHP version 3.01
 License: PHP
 # for fb_config command
@@ -634,7 +615,6 @@ License.
 
 %package snmp
 Summary: A module for PHP applications that query SNMP-managed devices
-Group: Development/Languages
 # All files licensed under PHP version 3.01
 License: PHP
 Requires: php-common%{?_isa} = %{version}-%{release}, net-snmp
@@ -653,7 +633,6 @@ will need to install this package and the php package.
 
 %package xml
 Summary: A module for PHP applications which use XML
-Group: Development/Languages
 # All files licensed under PHP version 3.01
 License: PHP
 Requires: php-common%{?_isa} = %{version}-%{release}
@@ -685,7 +664,6 @@ and performing XSL transformations on XML documents.
 
 %package xmlrpc
 Summary: A module for PHP applications which use the XML-RPC protocol
-Group: Development/Languages
 # All files licensed under PHP version 3.01, except
 # libXMLRPC is licensed under BSD
 License: PHP and BSD
@@ -702,7 +680,6 @@ support for the XML-RPC protocol to PHP.
 
 %package mbstring
 Summary: A module for PHP applications which need multi-byte string handling
-Group: Development/Languages
 # All files licensed under PHP version 3.01, except
 # libmbfl is licensed under LGPLv2
 # ucgendat is licensed under OpenLDAP
@@ -722,7 +699,6 @@ support for multi-byte string handling to PHP.
 
 %package gd
 Summary: A module for PHP applications for using the gd graphics library
-Group: Development/Languages
 # All files licensed under PHP version 3.01
 %if %{with_libgd}
 License: PHP
@@ -754,7 +730,6 @@ support for using the gd graphics library to PHP.
 
 %package bcmath
 Summary: A module for PHP applications for using the bcmath library
-Group: Development/Languages
 # All files licensed under PHP version 3.01, except
 # libbcmath is licensed under LGPLv2+
 License: PHP and LGPLv2+
@@ -771,7 +746,6 @@ support for using the bcmath library to PHP.
 
 %package gmp
 Summary: A module for PHP applications for using the GNU MP library
-Group: Development/Languages
 # All files licensed under PHP version 3.01
 License: PHP
 BuildRequires: gmp-devel
@@ -788,7 +762,6 @@ using the GNU MP library.
 
 %package dba
 Summary: A database abstraction layer module for PHP applications
-Group: Development/Languages
 # All files licensed under PHP version 3.01
 License: PHP
 BuildRequires: libdb-devel
@@ -807,7 +780,6 @@ support for using the DBA database abstraction layer to PHP.
 
 %package tidy
 Summary: Standard PHP module provides tidy library support
-Group: Development/Languages
 # All files licensed under PHP version 3.01
 License: PHP
 Requires: php-common%{?_isa} = %{version}-%{release}
@@ -824,7 +796,6 @@ support for using the tidy library to PHP.
 
 %package pdo-dblib
 Summary: PDO driver Microsoft SQL Server and Sybase databases
-Group: Development/Languages
 # All files licensed under PHP version 3.01
 License: PHP
 Requires: php-pdo%{?_isa} = %{version}-%{release}
@@ -844,7 +815,6 @@ PHP to Microsoft SQL Server and Sybase databases through the FreeTDS library.
 
 %package embedded
 Summary: PHP library for embedding in applications
-Group: System Environment/Libraries
 Requires: php-common%{?_isa} = %{version}-%{release}
 # doing a real -devel package for just the .so symlink is a bit overkill
 Provides: php-embedded-devel = %{version}-%{release}
@@ -863,7 +833,6 @@ into applications to provide PHP scripting language support.
 
 %package pspell
 Summary: A module for PHP applications for using pspell interfaces
-Group: System Environment/Libraries
 # All files licensed under PHP version 3.01
 License: PHP
 Requires: php-common%{?_isa} = %{version}-%{release}
@@ -880,7 +849,6 @@ support for using the pspell library to PHP.
 
 %package recode
 Summary: A module for PHP applications for using the recode library
-Group: System Environment/Libraries
 # All files licensed under PHP version 3.01
 License: PHP
 Requires: php-common%{?_isa} = %{version}-%{release}
@@ -897,7 +865,6 @@ support for using the recode library to PHP.
 
 %package intl
 Summary: Internationalization extension for PHP applications
-Group: System Environment/Libraries
 # All files licensed under PHP version 3.01
 License: PHP
 Requires: php-common%{?_isa} = %{version}-%{release}
@@ -914,7 +881,6 @@ support for using the ICU library to PHP.
 
 %package enchant
 Summary: Enchant spelling extension for PHP applications
-Group: System Environment/Libraries
 # All files licensed under PHP version 3.0
 License: PHP
 Requires: php-common%{?_isa} = %{version}-%{release}
@@ -933,7 +899,6 @@ support for using the enchant library to PHP.
 Summary: JavaScript Object Notation extension for PHP
 # All files licensed under PHP version 3.0.1
 License: PHP
-Group: System Environment/Libraries
 Requires: php-common%{?_isa} = %{version}-%{release}
 Provides:  php-pecl(json)         = %{jsonver}
 Provides:  php-pecl(json)%{?_isa} = %{jsonver}
@@ -957,7 +922,6 @@ support for JavaScript Object Notation (JSON) to PHP.
 Summary: Wrapper for the Sodium cryptographic library
 # All files licensed under PHP version 3.0.1
 License: PHP
-Group: System Environment/Libraries
 BuildRequires:  pkgconfig(libsodium) >= 1.0.9
 
 Requires: php-common%{?_isa} = %{version}-%{release}
