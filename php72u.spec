@@ -1087,9 +1087,6 @@ rm -f TSRM/tsrm_win32.h \
 find . -name \*.[ch] -exec chmod 644 {} \;
 chmod 644 README.*
 
-# php-fpm configuration files for tmpfiles.d
-echo "d /run/php-fpm 755 root root" >php-fpm.tmpfiles
-
 # Some extensions have their own configuration file
 cp %{SOURCE50} 10-opcache.ini
 
@@ -1494,9 +1491,6 @@ install -m 644 %{SOURCE4} $RPM_BUILD_ROOT%{_sysconfdir}/php-fpm.conf
 install -m 644 %{SOURCE5} $RPM_BUILD_ROOT%{_sysconfdir}/php-fpm.d/www.conf
 mv $RPM_BUILD_ROOT%{_sysconfdir}/php-fpm.conf.default .
 mv $RPM_BUILD_ROOT%{_sysconfdir}/php-fpm.d/www.conf.default .
-# tmpfiles.d
-install -m 755 -d $RPM_BUILD_ROOT%{_prefix}/lib/tmpfiles.d
-install -m 644 php-fpm.tmpfiles $RPM_BUILD_ROOT%{_prefix}/lib/tmpfiles.d/php-fpm.conf
 # install systemd unit files and scripts for handling server startup
 install -m 755 -d $RPM_BUILD_ROOT%{_sysconfdir}/systemd/system/php-fpm.service.d
 install -Dm 644 %{SOURCE6}  $RPM_BUILD_ROOT%{_unitdir}/php-fpm.service
@@ -1720,13 +1714,12 @@ exit 0
 %config(noreplace) %{_sysconfdir}/php-fpm.conf
 %config(noreplace) %{_sysconfdir}/php-fpm.d/www.conf
 %config(noreplace) %{_sysconfdir}/logrotate.d/php-fpm
-%{_prefix}/lib/tmpfiles.d/php-fpm.conf
 %{_unitdir}/php-fpm.service
 %{_sbindir}/php-fpm
 %dir %{_sysconfdir}/systemd/system/php-fpm.service.d
 %dir %{_sysconfdir}/php-fpm.d
 %attr(750,php-fpm,php-fpm) %dir %{_localstatedir}/log/php-fpm
-%dir /run/php-fpm
+%dir %ghost /run/php-fpm
 %{_mandir}/man8/php-fpm.8*
 %dir %{_datadir}/fpm
 %{_datadir}/fpm/status.html
@@ -1801,6 +1794,7 @@ exit 0
 %changelog
 * Thu Aug 01 2019 Carl George <carl@george.computer> - 7.2.21-1
 - Latest upstream
+- Use systemd RuntimeDirectory
 
 * Fri Jul 05 2019 Carl George <carl@george.computer> - 7.2.20-1
 - Latest upstream
