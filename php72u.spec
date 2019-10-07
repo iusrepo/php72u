@@ -1792,7 +1792,7 @@ exit 0
 
 
 %changelog
-* Mon Oct 7 2019 Michael Labuschke <m.labuschke@futec-gmbh.de> - 7.23-2
+* Mon Oct 7 2019 Michael Labuschke <m.labuschke@futec-gmbh.de> - 7.2.23-2
 - re-add pid file used by logrotate to fix logrotate issue 
 
 * Fri Sep 27 2019 Sam P <survient@fedoraproject.org> - 7.2.23-1
