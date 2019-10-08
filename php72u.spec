@@ -56,7 +56,7 @@
 Summary: PHP scripting language for creating dynamic web sites
 Name: php72u
 Version: 7.2.23
-Release: 1%{?dist}
+Release: 2%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -1792,6 +1792,9 @@ exit 0
 
 
 %changelog
+* Mon Oct 7 2019 Michael Labuschke <m.labuschke@futec-gmbh.de> - 7.2.23-2
+- re-add pid file used by logrotate to fix logrotate issue 
+
 * Fri Sep 27 2019 Sam P <survient@fedoraproject.org> - 7.2.23-1
 - Latest upstream
 
