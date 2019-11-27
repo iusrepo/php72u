@@ -1792,7 +1792,7 @@ exit 0
 
 
 %changelog
-* Mon Oct 24 2019 Seth Ryder <seth@sethryder.com> - 7.2.24-1
+* Thu Oct 24 2019 Seth Ryder <seth@sethryder.com> - 7.2.24-1
 - Latest upstream
 
 * Mon Oct 7 2019 Michael Labuschke <m.labuschke@futec-gmbh.de> - 7.2.23-2
