@@ -1792,7 +1792,7 @@ exit 0
 
 
 %changelog
-* Thu Mar 09 2020 Milosz Galazka <milosz@sleeplessbeastie.eu> - 7.2.28-1
+* Mon Mar 09 2020 Milosz Galazka <milosz@sleeplessbeastie.eu> - 7.2.28-1
 - Latest upstream
 
 * Thu Jan 30 2020 Devin Zuczek <dzuczek@dlc-solutions.com> - 7.2.27-1
