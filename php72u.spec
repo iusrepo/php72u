@@ -55,7 +55,7 @@
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php72u
-Version: 7.2.27
+Version: 7.2.28
 Release: 1%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -1792,6 +1792,9 @@ exit 0
 
 
 %changelog
+* Mon Mar 09 2020 Milosz Galazka <milosz@sleeplessbeastie.eu> - 7.2.28-1
+- Latest upstream
+
 * Thu Jan 30 2020 Devin Zuczek <dzuczek@dlc-solutions.com> - 7.2.27-1
 - Latest upstream
 
