@@ -5,6 +5,7 @@ task:
   name: el$RELEASEVER
   container:
     image: centos:$RELEASEVER
+  timeout_in: 90m
   macros_script: |
     cat > $HOME/.rpmmacros << EOF
     %_sourcedir $PWD
